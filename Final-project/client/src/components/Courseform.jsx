@@ -1,61 +1,70 @@
-import React from 'react'
+import React from "react";
 
-const Courseform = ({formData,handelChange,handelSubmit,btnText}) => {
+const CourseForm = ({ formData, handleChange, handleSubmit, btnText }) => {
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white p-6 rounded-lg shadow-md space-y-4"
+    >
+      <input
+        type="text"
+        name="title"
+        placeholder="Course Title"
+        value={formData.title}
+        onChange={handleChange}
+        className="w-full border p-3 rounded"
+      />
 
-  return <>
-  <form onSubmit={handelSubmit}>
-    <input 
-    type='text'
-    name='title'
-    placeholder='course title'
-    value={formData.title}
-    onChange={handelChange}
-    />
-     <input 
-    type='text'
-    name='instructor'
-    placeholder='course instructor'
-    value={formData.instructor}
-    onChange={handelChange}
-    />
-     <input 
-    type='number'
-    name='price'
-    placeholder='course price'
-    value={formData.price}
-    onChange={handelChange}
-    />
-     <input 
-    type='text'
-    name='duration'
-    placeholder='course duration'
-    value={formData.duration}
-    onChange={handelChange}
-    />
-     <input 
-    type='text'
-    name='category'
-    placeholder='course category'
-    value={formData.category}
-    onChange={handelChange}
-    />
-     <textarea
-    type='text'
-    name='description'
-    placeholder='course description'
-    value={formData.description}
-    onChange={handelChange}
-    rows="4"
-    ></textarea>
-  <button className='bg-blue-600 text-white'>
-    {btnText}
-  </button>
-    
+      <input
+        type="text"
+        name="instructor"
+        placeholder="Instructor Name"
+        value={formData.instructor}
+        onChange={handleChange}
+        className="w-full border p-3 rounded"
+      />
 
+      <input
+        type="number"
+        name="price"
+        placeholder="Price"
+        value={formData.price}
+        onChange={handleChange}
+        className="w-full border p-3 rounded"
+      />
 
-  </form>
-  
-  </>
-}
+      <input
+        type="text"
+        name="duration"
+        placeholder="Duration"
+        value={formData.duration}
+        onChange={handleChange}
+        className="w-full border p-3 rounded"
+      />
 
-export default Courseform
+      <input
+        type="text"
+        name="category"
+        placeholder="Category"
+        value={formData.category}
+        onChange={handleChange}
+        className="w-full border p-3 rounded"
+      />
+
+      <textarea
+        name="description"
+        placeholder="Description"
+        value={formData.description}
+        onChange={handleChange}
+        className="w-full border p-3 rounded"
+        rows="4"
+      ></textarea>
+
+      <button className="bg-blue-600 text-white px-5 py-3 rounded hover:bg-blue-700">
+        {btnText}
+      </button>
+    </form>
+  );
+};
+
+export default CourseForm;

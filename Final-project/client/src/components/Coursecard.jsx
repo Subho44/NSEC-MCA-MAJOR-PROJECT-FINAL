@@ -1,27 +1,39 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-const Coursecard = ({course,onDelete}) => {
+import React from "react";
+import { Link } from "react-router-dom";
 
-  return <>
-  <div className='bg-white shadow rounded-lg p-4 border'>
-    <h2>{course.title}</h2>
-    <p>{course.instructor}</p>
-   <p>₹{course.price}</p>
-   <p>{course.duration}</p>
-   <p>{course.category}</p>
+const CourseCard = ({ course, onDelete }) => {
+  return (
+    <div className="bg-white rounded-lg shadow p-4 border">
+      <h2 className="text-xl font-bold text-blue-600 mb-2">{course.title}</h2>
+      <p className="mb-1"><span className="font-semibold">Instructor:</span> {course.instructor}</p>
+      <p className="mb-1"><span className="font-semibold">Price:</span> ₹{course.price}</p>
+      <p className="mb-1"><span className="font-semibold">Duration:</span> {course.duration}</p>
+      <p className="mb-1"><span className="font-semibold">Category:</span> {course.category}</p>
 
-   <div className='flex gap-2'>
-    <Link to={`/course/${course._id}`}>View</Link>
-    <Link to={`/edit-course/${course._id}`}>Edit</Link>
-    <button onClick={()=>onDelete(course._id)}>
-        Delete
-    </button>
-   </div>
+      <div className="flex gap-2 mt-4 flex-wrap">
+        <Link
+          to={`/course/${course._id}`}
+          className="bg-green-600 text-white px-4 py-2 rounded"
+        >
+          View
+        </Link>
 
-  </div>
-  
-  
-  </>
-}
+        <Link
+          to={`/edit-course/${course._id}`}
+          className="bg-yellow-500 text-white px-4 py-2 rounded"
+        >
+          Edit
+        </Link>
 
-export default Coursecard
+        <button
+          onClick={() => onDelete(course._id)}
+          className="bg-red-600 text-white px-4 py-2 rounded"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default CourseCard;

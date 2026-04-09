@@ -1,30 +1,35 @@
-import { BrowserRouter,Routes,Route } from "react-router-dom"
-import Home from "./pages/Home"
-import About from "./pages/About"
-import Contact from "./pages/Contact"
-import Feauture from "./pages/Feauture"
-import Navbar from "./components/Navbar"
-import Footer from "./components/Footer"
-import Addcourse from "./pages/Addcourse"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Feature from "./pages/Feauture";
+import AddCourse from "./pages/Addcourse";
+import EditCourse from "./pages/Editcourse";
+import SingleCourse from "./pages/Singelcourse";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 const App = () => {
+  return (
+    <BrowserRouter>
+      <Navbar />
 
-  return <>
-  <BrowserRouter>
-  <Navbar/>
-  <Routes>
-    <Route path="/home" element={<Home/>}></Route>
-    <Route path="/about" element={<About/>}></Route>
-    <Route path="/contact" element={<Contact/>}></Route>
-    <Route path="/f" element={<Feauture/>}></Route>
-     <Route path="/add-course" element={<Addcourse/>}></Route>
-  </Routes>
-  
-  <Footer/>
-  </BrowserRouter>
-  
-  
-  </>
-}
+      <div className="min-h-screen">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/f" element={<Feature />} />
+          <Route path="/add-course" element={<AddCourse />} />
+          <Route path="/edit-course/:id" element={<EditCourse />} />
+          <Route path="/course/:id" element={<SingleCourse />} />
+        </Routes>
+      </div>
 
-export default App
+      <Footer />
+    </BrowserRouter>
+  );
+};
+
+export default App;
