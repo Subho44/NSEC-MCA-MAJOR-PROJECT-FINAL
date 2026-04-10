@@ -8,6 +8,11 @@ const courseschema = new mongoose.Schema(
     duration: { type: String, required: true },
     category: { type: String, required: true },
     description: { type: String, required: true },
+    images:[
+      {
+        type:String,
+      },
+    ],
   },
   { timestamps: true }
 );

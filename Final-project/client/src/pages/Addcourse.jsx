@@ -13,16 +13,36 @@ const AddCourse = () => {
     duration: "",
     category: "",
     description: "",
-  });
 
+  });
+ const [images,setImages] = useState([]);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleFilechange = (e) => {
+    setImages(e.target.files);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await API.post("/", formData);
+      const  data = new FormData();
+      data.append("title",formData.title);
+      data.append("instructor",formData.instructor);
+      data.append("price",formData.price);
+      data.append("duration",formData.duration);
+      data.append("category",formData.category);
+      data.append("description",formData.description);
+
+      for(let i=0; i< images.length; i++){
+        data.append("images",images[i]);
+      }
+
+      await API.post("/",data, {
+        headers:{
+          "Content-Type":"multipart/form-data",
+        },
+      });
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -36,6 +56,7 @@ const AddCourse = () => {
         formData={formData}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
+        handelFile={handleFilechange}
         btnText="Add Course"
       />
     </div>

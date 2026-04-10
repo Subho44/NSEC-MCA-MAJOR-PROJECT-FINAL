@@ -4,6 +4,7 @@ const Course = require("../models/Course");
 exports.addcourse = async (req, res) => {
   try {
     const { title, instructor, duration, price, category, description } = req.body;
+    const imageFiles = req.files ? req.files.map((file)=>file.filename) : [];
 
     const newcourse = await Course.create({
       title,
@@ -11,7 +12,8 @@ exports.addcourse = async (req, res) => {
       duration,
       price,
       category,
-      description
+      description,
+      images:imageFiles,
     });
 
     res.status(201).json({ message: "course added successfully", newcourse });
@@ -43,8 +45,32 @@ exports.singelcourse = async (req, res) => {
 
 // update
 exports.updatecourse = async (req, res) => {
+
   try {
-    const course = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true });
+     const { title, instructor, duration, price, category, description } = req.body;
+     const oldcourse = await Course.findById(req.params.id);
+     if(!oldcourse) {
+      return res.status(400).json({ message: "course not found"});
+     }
+     let updatedimages = oldcourse.images;
+     if(req.files && req.files.length >0){
+      updatedimages = req.files.map((file)=> file.filename);
+     }
+
+    
+    const course = await Course.findByIdAndUpdate(
+      req.params.id,
+      {
+      title,
+      instructor,
+      duration,
+      price,
+      category,
+      description,
+      images:updatedimages,
+    },
+     { new: true });
+
     res.status(200).json(course);
   } catch (err) {
     res.status(400).json({ message: "course not updated", err });

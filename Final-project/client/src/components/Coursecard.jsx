@@ -4,6 +4,15 @@ import { Link } from "react-router-dom";
 const CourseCard = ({ course, onDelete }) => {
   return (
     <div className="bg-white rounded-lg shadow p-4 border">
+      {
+       course.images && course.images.length >0 && (
+        <img
+        src={`http://localhost:5500/uploads/${course.images[0]}`}
+        className="w-50 h-50 object-cover rounded mb-3"        
+        />
+       )
+
+      }
       <h2 className="text-xl font-bold text-blue-600 mb-2">{course.title}</h2>
       <p className="mb-1"><span className="font-semibold">Instructor:</span> {course.instructor}</p>
       <p className="mb-1"><span className="font-semibold">Price:</span> ₹{course.price}</p>

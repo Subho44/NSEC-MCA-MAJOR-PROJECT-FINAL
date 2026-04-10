@@ -1,6 +1,6 @@
 import React from "react";
 
-const CourseForm = ({ formData, handleChange, handleSubmit, btnText }) => {
+const CourseForm = ({ formData, handleChange, handleSubmit, btnText,handelFile }) => {
   return (
     <form
       onSubmit={handleSubmit}
@@ -59,6 +59,12 @@ const CourseForm = ({ formData, handleChange, handleSubmit, btnText }) => {
         className="w-full border p-3 rounded"
         rows="4"
       ></textarea>
+      <input 
+       type="file"
+       multiple
+       onChange={handelFile}
+       className="w-full border p-3 rounded"
+      />
 
       <button className="bg-blue-600 text-white px-5 py-3 rounded hover:bg-blue-700">
         {btnText}
