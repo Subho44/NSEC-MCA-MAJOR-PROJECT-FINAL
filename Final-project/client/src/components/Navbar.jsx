@@ -1,34 +1,72 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from "react-router-dom";
+
 const Navbar = () => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
-  return <>
-  <div className='bg-white shadow-md'>
-    <div className='flex max-w-6xl mx-auto justify-between items-center px-4 py-4'>
-        <h1 className='text-2xl font-bold text-blue-600'>E-Learning</h1>
-        <ul className='flex gap-6 text-zinc-900 font-medium'>
-            <li className='hover:text-blue-600 cursor-pointer'>
-                <Link to="/home">Home</Link>
-            </li>
-              <li className='hover:text-blue-600 cursor-pointer'>
-                <Link to="/about">About</Link>
-            </li>
-             <li className='hover:text-blue-600 cursor-pointer'>
-                <Link to="/contact">Contact</Link>
-            </li>
-             <li className='hover:text-blue-600 cursor-pointer'>
-                <Link to="/f">Feauture</Link>
-            </li>
-            <li className='hover:text-blue-600 cursor-pointer'>
-                <Link to="/add-course">Add Course</Link>
-            </li>
-        </ul>
+  const logout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
+  return (
+    <div className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+
+        {/* Logo */}
+        <h1
+          onClick={() => navigate("/")}
+          className="text-2xl font-bold text-blue-600 tracking-wide cursor-pointer"
+        >
+          E-Learning
+        </h1>
+
+        {/* Menu */}
+        <div className="flex gap-6 items-center text-gray-700 font-medium">
+
+          <Link to="/" className="hover:text-blue-600">Home</Link>
+          <Link to="/about" className="hover:text-blue-600">About</Link>
+          <Link to="/contact" className="hover:text-blue-600">Contact</Link>
+
+          {/* Show Add Course only when logged in */}
+          {token && (
+            <Link
+              to="/add-course"
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+            >
+              Add Course
+            </Link>
+          )}
+
+          {/* AUTH BUTTONS */}
+          {token ? (
+            <button
+              onClick={logout}
+              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+              >
+                Login
+              </Link>
+
+              <Link
+                to="/register"
+                className="border border-blue-600 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-600 hover:text-white transition"
+              >
+                Register
+              </Link>
+            </>
+          )}
+        </div>
+      </div>
     </div>
-  </div>
-  
-  
-  
-  </>
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

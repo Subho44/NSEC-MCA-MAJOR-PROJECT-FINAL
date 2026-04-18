@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import API from "../api/courseApi";
-import CourseList from "../components/CourseList";
+import CourseList from "../components/Courselist";
 import { FaSearch, FaTimes, FaBookOpen } from "react-icons/fa";
 
 const Home = () => {

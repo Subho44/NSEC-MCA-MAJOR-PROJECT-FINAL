@@ -3,6 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectdb = require("./config/db");
 const courserouter = require("./routes/courseRoutes");
+const userRouter = require("./routes/userRoutes");
 const path = require("path");
 
 dotenv.config();
@@ -17,6 +18,7 @@ app.use(express.json());
 connectdb();
 
 app.use('/api/courses', courserouter);
+app.use('/api/auth',userRouter);
 
 app.get('/', (req, res) => {
   res.send("api is running");

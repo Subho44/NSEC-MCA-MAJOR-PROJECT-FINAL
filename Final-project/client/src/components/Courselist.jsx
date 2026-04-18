@@ -1,4 +1,4 @@
-import CourseCard from "./CourseCard";
+import CourseCard from "./Coursecard";
 
 const CourseList = ({ courses, onDelete }) => {
   return (

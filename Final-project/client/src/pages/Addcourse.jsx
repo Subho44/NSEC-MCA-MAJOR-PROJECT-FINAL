@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import API from "../api/courseApi";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import CourseForm from "../components/Courseform";
 import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -21,45 +21,66 @@ const AddCourse = () => {
   const [previewImages, setPreviewImages] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Handle text input changes
+  // 🔐 PROTECT PAGE (LOGIN REQUIRED)
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error("Please login first!");
+      navigate("/login");
+    }
+  }, []);
+
+  // Handle text input
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle image selection with preview
+  // Handle file upload + preview
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
     setImages(files);
-    setPreviewImages(files.map((file) => URL.createObjectURL(file)));
+
+    const previews = files.map((file) => URL.createObjectURL(file));
+    setPreviewImages(previews);
   };
 
-  // Handle form submission
+  // Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (!formData.title || !formData.instructor || !formData.price) {
-      toast.error("Please fill all required fields!");
+      toast.error("Please fill required fields!");
       return;
     }
 
     try {
       setLoading(true);
 
+      const token = localStorage.getItem("token");
+
       const data = new FormData();
+
+      // append text fields
       Object.keys(formData).forEach((key) =>
         data.append(key, formData[key])
       );
 
+      // append images
       images.forEach((img) => data.append("images", img));
 
-      await API.post("/", data, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      await axios.post(
+        "http://localhost:5500/api/courses",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: token, // 🔐 send token
+          },
+        }
+      );
 
       toast.success("Course added successfully!");
 
-      // Redirect after success
       setTimeout(() => navigate("/"), 1500);
     } catch (error) {
       console.error(error);
@@ -74,7 +95,7 @@ const AddCourse = () => {
       <ToastContainer position="top-right" autoClose={3000} />
 
       <div className="max-w-4xl mx-auto">
-        {/* Back Button */}
+        {/* Back */}
         <Link
           to="/"
           className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-4 font-medium"
@@ -82,18 +103,16 @@ const AddCourse = () => {
           <FaArrowLeft /> Back to Home
         </Link>
 
-        {/* Hero Header */}
+        {/* Hero */}
         <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-2xl p-8 mb-6 shadow-lg text-center">
-          <div className="flex justify-center mb-3">
-            <FaBookOpen className="text-4xl" />
-          </div>
+          <FaBookOpen className="text-4xl mx-auto mb-3" />
           <h2 className="text-3xl font-bold">Add New Course</h2>
           <p className="text-sm opacity-90 mt-2">
-            Create and publish a new course for your students.
+            Create and publish a new course
           </p>
         </div>
 
-        {/* Form Card */}
+        {/* Form */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <CourseForm
             formData={formData}
@@ -103,18 +122,18 @@ const AddCourse = () => {
             btnText={loading ? "Adding..." : "Add Course"}
           />
 
-          {/* Image Preview Section */}
+          {/* Preview */}
           {previewImages.length > 0 && (
             <div className="mt-6">
               <h3 className="text-lg font-semibold mb-3 text-gray-700">
                 Image Preview
               </h3>
+
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {previewImages.map((src, index) => (
                   <img
                     key={index}
                     src={src}
-                    alt="preview"
                     className="w-full h-32 object-cover rounded-lg border shadow"
                   />
                 ))}
@@ -122,7 +141,7 @@ const AddCourse = () => {
             </div>
           )}
 
-          {/* Loading Spinner */}
+          {/* Loader */}
           {loading && (
             <div className="flex justify-center mt-6">
               <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
