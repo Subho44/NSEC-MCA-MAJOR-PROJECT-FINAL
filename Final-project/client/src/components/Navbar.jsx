@@ -27,7 +27,9 @@ const Navbar = () => {
           <Link to="/" className="hover:text-blue-600">Home</Link>
           <Link to="/about" className="hover:text-blue-600">About</Link>
           <Link to="/contact" className="hover:text-blue-600">Contact</Link>
-
+          <Link to="/cart" className="hover:text-blue-600">Cart</Link>
+          <Link to="/live" className="hover:text-blue-600">Live classes</Link>
+          <Link to="/create-live" className="hover:text-blue-600">Create Class</Link>
           {/* Show Add Course only when logged in */}
           {token && (
             <Link

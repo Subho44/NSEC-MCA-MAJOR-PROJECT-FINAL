@@ -4,6 +4,9 @@ const dotenv = require('dotenv');
 const connectdb = require("./config/db");
 const courserouter = require("./routes/courseRoutes");
 const userRouter = require("./routes/userRoutes");
+const cartroutes = require("./routes/cartRoutes");
+const orderroutes = require("./routes/orderRoutes");
+const liveroutes = require("./routes/liveclassRoutes");
 const path = require("path");
 
 dotenv.config();
@@ -20,6 +23,9 @@ connectdb();
 
 app.use('/api/courses', courserouter);
 app.use('/api/auth',userRouter);
+app.use('/api/cart',cartroutes);
+app.use('/api/orders',orderroutes);
+app.use('/api/live',liveroutes);
 
 app.get('/', (req, res) => {
   res.send("api is running");

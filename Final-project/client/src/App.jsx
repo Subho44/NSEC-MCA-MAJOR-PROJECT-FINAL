@@ -15,6 +15,9 @@ import SingleCourse from "./pages/Singelcourse";
 import Register from "./pages/Register";
 import VerifyOtp from "./pages/VerifyOtp";
 import Login from "./pages/Login";
+import Cart from "./pages/Cart";
+import Liveclasses from "./pages/Liveclasses";
+import Addliveclass from "./pages/Addliveclass";
 
 const App = () => {
   return (
@@ -36,6 +39,9 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/f" element={<Feature />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/live" element={<Liveclasses />} />
+          <Route path="/create-live" element={<Addliveclass />} />
         </Routes>
       </div>
 

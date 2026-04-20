@@ -1,8 +1,17 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 const CourseCard = ({ course, onDelete }) => {
   const [activeImage, setActiveImage] = useState(0);
+
+  const addToCart = async()=>{
+    await axios.post("http://localhost:5500/api/cart/add",{
+      userId:"user1",
+      course
+    });
+    alert("Added to cart");
+  };
 
   return (
     <div className="bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 overflow-hidden border group">
@@ -54,6 +63,12 @@ const CourseCard = ({ course, onDelete }) => {
           >
             View
           </Link>
+          <button
+            onClick={addToCart}
+            className="flex-1 bg-red-600 text-white py-2 rounded-lg"
+          >
+            Add to Cart
+          </button>
 
           <button
             onClick={() => onDelete(course._id)}
